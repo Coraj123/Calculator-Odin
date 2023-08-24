@@ -9,6 +9,7 @@ let numButtons = document.querySelectorAll(".num");
 let operateButtons = document.querySelectorAll(".operator");
 let equalButton = document.querySelectorAll(".equal");
 let display = document.querySelector(".displayDiv");
+let clear = document.querySelector(".clearDisplay");
 
 numButtons.forEach(function(button) {
     button.addEventListener('click', function() {
@@ -72,7 +73,23 @@ equalButton.forEach(function(button) {
         
     });
 });
+
+function clearBox() {
+
+    display.textContent = "";
    
+        calcObject.numbArr = [];
+        calcObject.operatorArr = [],
+        calcObject.secondNumbArr = [];
+        calcObject.equalArr = [];
+        console.log(calcObject.numbArr);
+};
+
+clear.addEventListener('click', function () {
+
+    clearBox();
+
+});
 
 // Define the operation function
 function operation(num1, num2, operatorArr) {
@@ -104,7 +121,7 @@ function operation(num1, num2, operatorArr) {
         return "Sike!" } 
         
         else {return sumNum1 / sumNum2;}
-        
+
     } else {
         return 0; // or any other appropriate value
     }
