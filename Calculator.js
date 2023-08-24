@@ -1,57 +1,119 @@
+let calcObject = {
+    numbArr: [],
+    operatorArr: [],
+    secondNumbArr: [],
+    equalArr: []
+}
 
-let displayValue = ""; // Initialize the display value as an empty string
-let operator = ""; // Initalize the operator value as an emptry string
-let equal = ""; // Initalize the equal operator value as an emptry string
-let secondValue = ""; // Initalize the second value as an emptry stirng..
+let numButtons = document.querySelectorAll(".num");
+let operateButtons = document.querySelectorAll(".operator");
+let equalButton = document.querySelectorAll(".equal");
+let display = document.querySelector(".displayDiv");
 
-    let numButtons = document.querySelectorAll(".num");
-    let operateButtons = document.querySelectorAll(".operator");
-    let equalButton = document.querySelectorAll(".equal");
+numButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        let clickedValue = button.textContent.trim(); // Extract the value from the button
 
-    numButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            let clickedValue = button.textContent.trim(); // Extract the value from the button
-            displayValue += clickedValue; // Append the clicked value to the display value
-            // Call a function to update the display with the new value
-            updateDisplay(displayValue, 10);
-            // if .... clear display with return number.
-        });
-    });
+        if (calcObject.numbArr.length <= 3 && calcObject.operatorArr.length < 1) {
 
-    operateButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            let clickedValue = button.textContent.trim(); // Extract the value from the button
-            operator += clickedValue; // Append the clicked value to the display value
-    
-        });
-    });
+        calcObject.numbArr.push(clickedValue);
+        console.log(calcObject.numbArr);
+        display.textContent = calcObject.numbArr.join('');
 
-    equalButton.forEach(function(button) {
-        button.addEventListener('click', function() {
-            let clickedValue = button.textContent.trim(); // Extract the value from the button
-            equal += clickedValue; // Append the clicked value to the display value
-            //call operate function when clicked
-            //operate function will call one of the operator function that passess displayValue, operator, and secondValue as parameters which will return the result.
-    
-        });
-    });
-    
-    
-    function updateDisplay(variable, x) {
-        let display = document.querySelector(".displayDiv");
-        let length = variable.length;
+        } else if (calcObject.operatorArr.length >= 1) {
+            
+            calcObject.secondNumbArr.push(clickedValue);
+            console.log(calcObject.secondNumbArr);
+            display.textContent = `${calcObject.numbArr.join('')} ${calcObject.operatorArr.join('')} ${calcObject.secondNumbArr.join('')}`
 
-        if (length <= x) {
-        
-            display.textContent = variable;
-        
         };
-    };
+
+    });
+});
+
+operateButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        let clickedValue = button.textContent.trim();
+
+        if (calcObject.operatorArr.length !== 1) {
+        calcObject.operatorArr.push(clickedValue);
+        console.log(calcObject.operatorArr);
+        console.log(calcObject.operatorArr.length);
+        display.textConent = `${calcObject.numbArr.join('')} ${calcObject.operatorArr.join('')}`
+
+        } else if (calcObject.operatorArr.length == 1) {
+
+        const result = operation(calcObject.numbArr, calcObject.secondNumbArr, calcObject.operatorArr);
+        console.log(result);
+        display.textContent = result;
+        calcObject.numbArr = [];
+        calcObject.numbArr.push(result);
+        calcObject.operatorArr[0] = clickedValue;
+        calcObject.secondNumbArr = []
+        console.log(calcObject.operatorArr);
+        console.log(calcObject.numbArr);
+
+        };
+
+})});
+
+  
+equalButton.forEach(function(button) {
+    button.addEventListener('click', function() {
+       const result = operation(calcObject.numbArr, calcObject.secondNumbArr, calcObject.operatorArr);
+        console.log(result);
+        display.textContent = result;
+        calcObject.numbArr = [];
+        calcObject.numbArr.push(result);
+        calcObject.operatorArr = [];
+        calcObject.secondNumbArr = [];
+        console.log(calcObject.numbArr)
+        console.log(calcObject.secondNumbArr);
+        
+    });
+});
+   
+
+// Define the operation function
+function operation(num1, num2, operatorArr) {
+    // Check if the operatorArr includes "+"
+    if (operatorArr.includes("+")) {
+        // Convert the arrays to numbers and perform addition
+        console.log(calcObject.operatorArr);
+        const sumNum1 = parseInt(num1.join(''));
+        const sumNum2 = parseInt(num2.join(''));
+        return sumNum1 + sumNum2;
+    } else if (operatorArr.includes("-")) {
+        console.log(calcObject.operatorArr);
+        const sumNum1 = parseInt(num1.join(''));
+        const sumNum2 = parseInt(num2.join(''));
+        return sumNum1 - sumNum2;
+
+    } else if (operatorArr.includes("x")) {
+        console.log(calcObject.operatorArr);
+        const sumNum1 = parseInt(num1.join(''));
+        const sumNum2 = parseInt(num2.join(''));
+        return sumNum1 * sumNum2;
+     
+    } else if (operatorArr.includes("/")) {
+        console.log(calcObject.operatorArr);
+        const sumNum1 = parseInt(num1.join(''));
+        const sumNum2 = parseInt(num2.join(''));
+
+        if (sumNum2 == 0 ) {
+        return "Sike!" } 
+        
+        else {return sumNum1 / sumNum2;}
+        
+    } else {
+        return 0; // or any other appropriate value
+    }
+};
 
 
 
 
-
+   
 
 
 
