@@ -57,7 +57,6 @@ operateButtons.forEach(function(button) {
         };
 
 })});
-
   
 equalButton.forEach(function(button) {
     button.addEventListener('click', function() {
